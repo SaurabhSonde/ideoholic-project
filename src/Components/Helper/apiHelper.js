@@ -1,4 +1,4 @@
-const API = process.env.REACT_APP_API;
+const API = "http://cloud.ideoholics.com:8006/";
 
 //create delivery request
 export const createDelivery = (deliveryReq) => {
