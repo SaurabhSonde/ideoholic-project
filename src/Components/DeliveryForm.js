@@ -35,6 +35,12 @@ const DeliveryForm = () => {
     },
   ]);
 
+  //created reference to add the values to partsRequirements array
+  const partNumber = React.createRef();
+  const brandName = React.createRef();
+  const partDescription = React.createRef();
+  const quantity = React.createRef();
+
   //on submit
   const onSubmit = (event) => {
     event.preventDefault();
@@ -77,7 +83,7 @@ const DeliveryForm = () => {
   const deliveryForm = () => {
     return (
       <div>
-        {values?.map((valu, index) => {
+        {values.map((valu, index) => {
           return (
             <div key={index}>
               <Container className="formContainer">
@@ -223,6 +229,7 @@ const DeliveryForm = () => {
                                 })
                               );
                             }}
+                            ref={partNumber}
                             value={valu.partsRequirements[0].partNumber}
                           />
                         </Col>
@@ -243,6 +250,7 @@ const DeliveryForm = () => {
                                 })
                               );
                             }}
+                            ref={brandName}
                             value={valu.partsRequirements[0].brandName}
                           />
                         </Col>
@@ -263,6 +271,7 @@ const DeliveryForm = () => {
                                 })
                               );
                             }}
+                            ref={partDescription}
                             value={valu.partsRequirements[0].partDescription}
                           />
                         </Col>
@@ -282,6 +291,7 @@ const DeliveryForm = () => {
                                 })
                               );
                             }}
+                            ref={quantity}
                             value={valu.partsRequirements[0].quantity}
                           />
                         </Col>
@@ -289,7 +299,27 @@ const DeliveryForm = () => {
                     </Card.Body>
                     <Card.Footer>
                       <Col sm="6">
-                        <Button variant="secondary" className="partButton">
+                        <Button
+                          variant="secondary"
+                          className="partButton"
+                          onClick={(e) => {
+                            const partNo = partNumber.current.value;
+                            const name = brandName.current.value;
+                            const partDesc = partDescription.current.value;
+                            const quan = quantity.current.value;
+                            setValues((currentValue) =>
+                              produce(currentValue, (v) => {
+                                console.log(currentValue);
+                                v[index].partsRequirements[0].partNumber =
+                                  partNo;
+                                v[index].partsRequirements[0].brandName = name;
+                                v[index].partsRequirements[0].partDescription =
+                                  partDesc;
+                                v[index].partsRequirements[0].quantity = quan;
+                              })
+                            );
+                          }}
+                        >
                           <i className="bi bi-plus"></i>ADD PART BUNDLE
                         </Button>
                       </Col>
@@ -363,10 +393,10 @@ const DeliveryForm = () => {
                             variant="outline-secondary"
                             className="btn1"
                             onClick={(e) => {
-                              const orderType = "Yes";
+                              const advanceStatus = "Yes";
                               setValues((currentValue) =>
                                 produce(currentValue, (v) => {
-                                  v[index].orderType = orderType;
+                                  v[index].advanceStatus = advanceStatus;
                                 })
                               );
                             }}
@@ -378,10 +408,10 @@ const DeliveryForm = () => {
                             variant="outline-secondary"
                             className="btn2"
                             onClick={(e) => {
-                              const orderType = "No";
+                              const advanceStatus = "No";
                               setValues((currentValue) =>
                                 produce(currentValue, (v) => {
-                                  v[index].orderType = orderType;
+                                  v[index].advanceStatus = advanceStatus;
                                 })
                               );
                             }}
